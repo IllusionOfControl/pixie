@@ -115,7 +115,8 @@ func handleMessagePhoto(update tgbotapi.Update, bot *tgbotapi.BotAPI) (tgbotapi.
 	}
 
 	img, _, _ := image.Decode(bytes.NewReader(photoData))
-	newImage := pixilizer.PixilizeImage(img, 2)
+	//newImage := pixilizer.PixilizeImage(img, 2)
+	newImage := pixilizer.PalettizeImage(img)
 	buf, _ := ConvertImageToBytes(newImage)
 
 	msg := tgbotapi.NewPhoto(
