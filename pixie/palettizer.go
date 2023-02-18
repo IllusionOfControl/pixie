@@ -1,4 +1,4 @@
-package pixilizer
+package pixie
 
 import (
 	"fmt"
