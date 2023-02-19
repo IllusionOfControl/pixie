@@ -5,11 +5,11 @@ import (
 	"image"
 )
 
-func PixilizeImage(image image.Image, pixelRelativeSize float64) image.Image {
+func PixilizeImage(image image.Image, pixelRelativeSize int) image.Image {
 	width := image.Bounds().Max.X
 	height := image.Bounds().Max.Y
 
-	pixelAbsoluteSize := pixelRelativeSize / 100 * float64(height)
+	pixelAbsoluteSize := float64(pixelRelativeSize) / 100 * float64(height)
 
 	numberFullPixelsHeight := height / int(pixelAbsoluteSize)
 	numberFullPixelsWidth := width / int(pixelAbsoluteSize)

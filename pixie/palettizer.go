@@ -12,11 +12,7 @@ import (
 const MaxIterations = 100
 const MaxPaletteColors = 32
 
-func LoadPaletteFromImage(img image.Image, colors int) (*palettor.Palette, error) {
-	if colors > MaxPaletteColors {
-		return nil, fmt.Errorf("the limit on the number of colors for the palette is %d", MaxPaletteColors)
-	}
-
+func LoadPaletteFromImage(img image.Image, colors int) *palettor.Palette {
 	thumbnail := resize.Thumbnail(200, 200, img, resize.Lanczos3)
 
 	palette, err := palettor.Extract(colors, MaxIterations, thumbnail)
@@ -24,7 +20,7 @@ func LoadPaletteFromImage(img image.Image, colors int) (*palettor.Palette, error
 	if err != nil {
 		log.Fatalf("image too small")
 	}
-	return palette, nil
+	return palette
 }
 
 func DrawPalette(canvasWidth, canvasHeight int, palette *palettor.Palette) image.Image {
@@ -55,4 +51,17 @@ func DrawImageWithPalette(origImg image.Image, palette *palettor.Palette) image.
 	draw.Draw(canvas, paletteRect, paletteImg, image.Point{}, draw.Src)
 
 	return canvas
+}
+
+func Palettize(origImg image.Image, colors int, withPalette bool) (image.Image, error) {
+	if colors > MaxPaletteColors {
+		return nil, fmt.Errorf("the limit on the number of colors for the palette is %d", MaxPaletteColors)
+	}
+
+	palette := LoadPaletteFromImage(origImg, colors)
+	if withPalette {
+		return DrawImageWithPalette(origImg, palette), nil
+	} else {
+		return DrawPalette(500, 200, palette), nil
+	}
 }
