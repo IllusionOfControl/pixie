@@ -9,26 +9,7 @@ import (
 	"pixie/pixilizer"
 )
 
-type PixieBot struct {
-	Bot *tgbotapi.BotAPI
-}
-
-type PixieBotConfig struct {
-	Token string
-	Debug bool
-}
-
-func NewBot(config *PixieBotConfig) (*PixieBot, error) {
-	bot, err := tgbotapi.NewBotAPI(config.Token)
-	if err != nil {
-		return nil, err
-	}
-	bot.Debug = config.Debug
-
-	return &PixieBot{Bot: bot}, err
-}
-
-func (pixie PixieBot) Polling() {
+func Polling(api *tgbotapi.BotAPI) {
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 

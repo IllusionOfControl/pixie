@@ -5,7 +5,7 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
-	bot "pixie/bot"
+	"pixie/bot"
 	"strconv"
 )
 
@@ -17,11 +17,14 @@ func loadEnv() {
 }
 
 func main() {
+	var (
+		token string
+		debug bool
+	)
 	loadEnv()
-	botConfig := &bot.PixieBotConfig{}
 
 	if value, exists := os.LookupEnv("TOKEN"); exists {
-		botConfig.Token = value
+		token = value
 	} else {
 		fmt.Println("Error: TOKEN environment variable not set.")
 		fmt.Println("Please set the TOKEN environment variable before running this program.")
@@ -29,19 +32,19 @@ func main() {
 	}
 
 	if value, exists := os.LookupEnv("DEBUG"); exists {
-		if debug, err := strconv.ParseBool(value); err != nil {
-			botConfig.Debug = debug
+		if value, err := strconv.ParseBool(value); err != nil {
+			debug = value
 		} else {
 			fmt.Errorf(err.Error())
 		}
 	} else {
-		botConfig.Debug = false
+		debug = false
 	}
 
-	bot, err := bot.NewBot(botConfig)
+	pixieBot, err := bot.NewBot(token, debug)
 	if err != nil {
 		panic(err)
 	}
 
-	bot.Polling()
+	bot.Polling(pixieBot)
 }
