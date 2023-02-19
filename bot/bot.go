@@ -169,35 +169,15 @@ func processUserMessage(update tgbotapi.Update, api *tgbotapi.BotAPI) tgbotapi.C
 }
 
 func processUserCommand(update tgbotapi.Update, api *tgbotapi.BotAPI) tgbotapi.Chattable {
-	userState := GetUserState(update.Message.Chat.ID)
-
 	switch update.Message.Command() {
 	case "help", "start":
 		return handleStartHelpCommand(update, api)
 	case "cancel":
-		userState.State = StartState
-		userState.ClearContext()
-
-		msg := tgbotapi.NewMessage(
-			update.Message.Chat.ID,
-			"Hi, i can turn your photo to pixel art. Try i sending me some pic!",
-		)
-
-		return msg
+		return handleCancelCommand(update, api)
 	case "pixilizer":
-		userState.State = PixilizerAskedForCount
-		msg := tgbotapi.NewMessage(
-			update.Message.Chat.ID,
-			"Input pixel dimension",
-		)
-		return msg
-	case "palletizer":
-		userState.State = PalettizerAskedForDimension
-		msg := tgbotapi.NewMessage(
-			update.Message.Chat.ID,
-			"Input colors count",
-		)
-		return msg
+		return handlePixilizerCommand(update, api)
+	case "palettizer":
+		return handlePalettizerCommand(update, api)
 	default:
 		return handleDefaultCommand(update, api)
 	}
