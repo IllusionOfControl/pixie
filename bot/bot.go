@@ -56,7 +56,7 @@ func processUserMessage(update tgbotapi.Update, api *tgbotapi.BotAPI) tgbotapi.C
 			)
 			return msg
 		} else {
-			userState.Context["count"] = update.Message.Text
+			userState.Context["dimension"] = update.Message.Text
 			userState.State = PixilizerAskedForImage
 
 			msg := tgbotapi.NewMessage(
@@ -87,7 +87,7 @@ func processUserMessage(update tgbotapi.Update, api *tgbotapi.BotAPI) tgbotapi.C
 
 			img, _, _ := image.Decode(bytes.NewReader(photoData))
 
-			dimensions, _ := strconv.Atoi(userState.Context["count"])
+			dimensions, _ := strconv.Atoi(userState.Context["dimension"])
 			newImage := pixie.PixilizeImage(img, dimensions)
 
 			buf, _ := ConvertImageToBytes(newImage)
