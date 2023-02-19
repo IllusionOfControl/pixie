@@ -85,10 +85,10 @@ func processUserMessage(update tgbotapi.Update, api *tgbotapi.BotAPI) tgbotapi.C
 				return msg
 			}
 
-			image, _, _ := image.Decode(bytes.NewReader(photoData))
+			img, _, _ := image.Decode(bytes.NewReader(photoData))
 
 			dimensions, _ := strconv.Atoi(userState.Context["count"])
-			newImage := pixie.PixilizeImage(image, dimensions)
+			newImage := pixie.PixilizeImage(img, dimensions)
 
 			buf, _ := ConvertImageToBytes(newImage)
 
@@ -140,10 +140,10 @@ func processUserMessage(update tgbotapi.Update, api *tgbotapi.BotAPI) tgbotapi.C
 				return msg
 			}
 
-			image, _, _ := image.Decode(bytes.NewReader(photoData))
+			img, _, _ := image.Decode(bytes.NewReader(photoData))
 
 			colors, _ := strconv.Atoi(userState.Context["count"])
-			newImage, err := pixie.Palettize(image, colors, true)
+			newImage, err := pixie.Palettize(img, colors, true)
 			if err != nil {
 				msg := tgbotapi.NewMessage(
 					update.Message.Chat.ID,
