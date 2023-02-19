@@ -8,8 +8,10 @@ Before starting, you will need to create a bot on Telegram and obtain its API to
 To install the bot and its dependencies, run the following command:
 
 ```sh
-go get -u github.com/go-telegram-bot-api/telegram-bot-api
-go get -u gocv.io/x/gocv
+go get -u github.com/go-telegram-bot-api/telegram-bot-api/v5
+go get -u github.com/joho/godotenv
+go get -u github.com/mccutchen/palettor
+go get -u github.com/nfnt/resize
 ```
 
 ### Docker
