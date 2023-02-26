@@ -34,6 +34,3 @@ Once the bot is running, you can interact with it by sending messages to it on T
 `/cancel` - Reset current operation
 
 To pixilize an image, the user needs to send an image file to the bot by selecting the file using the paperclip icon in the chat. The bot will then ask for the size of the pixels (in percentage), the number of clusters for K-means algorithm, and the color offset. The bot will then pixilize the image and send the result back to the user.
-
-Contributors
-This project was created by Illusion of control. Contributions are welcome, and you can submit pull requests or file issues on the project's GitHub repository.
